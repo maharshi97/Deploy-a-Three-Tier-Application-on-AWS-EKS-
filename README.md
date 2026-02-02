@@ -16,7 +16,64 @@ The primary goal of this project was to simulate a real-world production environ
 
 The application is an E-commerce platform built using a **Microservices Architecture**. It consists of **10+ services**, each written in a different programming language to demonstrate polyglot support and service interoperability using **gRPC** and **Protobuf**.
 
-![Architecture Diagram](https://raw.githubusercontent.com/open-telemetry/opentelemetry-demo/main/docs/img/architecture.png)
+```mermaid
+graph TD
+    subgraph "Service Mesh"
+        FrontendProxy(Frontend Proxy)
+    end
+    
+    subgraph "Application Services"
+        Frontend[Frontend]
+        Ad[Ad Service]
+        Cart[Cart Service]
+        Checkout[Checkout Service]
+        Currency[Currency Service]
+        Email[Email Service]
+        Payment[Payment Service]
+        ProductCatalog[Product Catalog]
+        Quote[Quote Service]
+        Recommendation[Recommendation Service]
+        Shipping[Shipping Service]
+        Accounting[Accounting Service]
+        FraudDetection[Fraud Detection Service]
+    end
+
+    subgraph "Infrastructure"
+        Redis[(Redis/Valkey)]
+        Kafka[Kafka]
+        Postgres[(Postgres)]
+        FF[Feature Flags]
+    end
+
+    Internet((User)) --> FrontendProxy
+    FrontendProxy --> Frontend
+
+    Frontend --> Ad
+    Frontend --> Cart
+    Frontend --> Checkout
+    Frontend --> Currency
+    Frontend --> ProductCatalog
+    Frontend --> Recommendation
+    Frontend --> Shipping
+
+    Checkout --> Cart
+    Checkout --> Payment
+    Checkout --> Email
+    Checkout --> Shipping
+    Checkout --> Currency
+    Checkout --> ProductCatalog
+    Checkout --> Kafka
+
+    Recommendation --> ProductCatalog
+    Shipping --> Quote
+    Cart --> Redis
+    
+    Kafka --> Accounting
+    Kafka --> FraudDetection
+    Accounting --> Postgres
+    
+    ProductCatalog --> FF
+```
 
 ### Service Stack
 | Service | Language/Tech | Description |
