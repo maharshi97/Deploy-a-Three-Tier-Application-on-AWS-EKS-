@@ -16,6 +16,8 @@ The primary goal of this project was to simulate a real-world production environ
 
 The application is an E-commerce platform built using a **Microservices Architecture**. It consists of **10+ services**, each written in a different programming language to demonstrate polyglot support and service interoperability using **gRPC** and **Protobuf**.
 
+![Architecture Diagram](https://raw.githubusercontent.com/open-telemetry/opentelemetry-demo/main/docs/img/architecture.png)
+
 ### Service Stack
 | Service | Language/Tech | Description |
 |---------|--------------|-------------|
